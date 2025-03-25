@@ -1,0 +1,68 @@
+@startuml
+class Cliente {
+    - nomeUsuario: String
+    - idUsuario: int
+    - emailUsuario: String
+    + criarLista()
+    + realizarPedido()
+    + acompanharPedido()
+}
+
+class Lista {
+    - nomeLista: String
+    - idLista: int
+    + adicionarLivro()
+}
+
+class Pedido {
+    - idPedido: int
+    - statusPedido: String
+    + realizarPedido()
+    + realizarPagamento()
+    + statusPedido()
+    + cancelarPedido()
+}
+
+class Livro {
+    - idLivro: int
+    - nomeLivro: String
+    - preco: double
+    - estoque: int
+    + atualizarEstoque(qtd: int)
+    + aplicarDesconto(percentual: double)
+    + exibirDetalhes()
+    + adicionarAvaliacao(nota: int, comentario: String)
+}
+
+class EBook {
+    - idLivro: int
+    - nomeLivro: String
+    - preco: double
+    + download()
+}
+
+class Pagamento {
+    - formaPagamento: String
+    + dadosCartao()
+    + gerarBoleto()
+    + validarPagamento()
+}
+
+class Entrega {
+    - tipoEntrega: String
+    - valorEntrega: double
+    - tipoTransporte: String
+    - prazoEntrega: int
+    + calculaEntrega()
+    + tipoEntrega()
+    + calcularFrete(peso: double, distancia: double): double
+    + rastrearPedido(idPedido: int): String
+}
+
+Cliente --> Lista : "1" cria "1"
+Cliente --> Pedido : "1" faz "n"
+Pedido --> Livro : "n" contém "1"
+Livro <|-- EBook : herda
+Pedido --> Pagamento : "1" processa "1"
+Pedido --> Entrega : "1" requer "1"
+@enduml
